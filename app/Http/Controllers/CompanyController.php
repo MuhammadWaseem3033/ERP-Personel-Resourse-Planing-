@@ -15,9 +15,13 @@ class CompanyController extends Controller
     {
         return view('company.create');
     }
-    public function store()
+    public function store(Request $request)
     {
-        return redirect('/company');
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required|email',
+            'mobile' =>'required|digits:11',
+        ]);
     }
     public function show()
     {
