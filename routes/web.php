@@ -21,11 +21,13 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
         return view('dashboard');
     })->name('dashboard');
 });
+// 
 Route::controller(CompanyController::class)->group(function(){
     Route::get('/company','index')->name('company.index');
     Route::get('/company-create','create')->name('company.create');
     Route::post('/company-store','store')->name('company.store');
     Route::get('/company-show/{id}','show');
-    Route::get('/company-edit/{id}','edit');
-    Route::get('/company/{id}','update');
+    Route::get('/company-edit/{company}','edit')->name('company.edit');
+    Route::get('/company-delete/{id}','delete')->name('company.delete');
+    Route::patch('/company-update/{company}','update')->name('company.update');
 });

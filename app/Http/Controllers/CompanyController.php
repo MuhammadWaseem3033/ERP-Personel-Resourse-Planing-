@@ -9,7 +9,8 @@ class CompanyController extends Controller
 {
     public function index()
     {
-        return view('company.index');
+        $companies = Company::get();
+        return view('company.index',compact('companies'));
     }
     public function create()
     {
@@ -17,26 +18,34 @@ class CompanyController extends Controller
     }
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name'=>'required',
             'email'=>'required|email',
             'mobile' =>'required|digits:11',
         ]);
+        Company::create($validated);
+        return redirect(route('company.index'))->with('alert','Create Successfully');
     }
-    public function show()
+    
+    public function edit(Company $company)
     {
-        //
+        return view('company.Edit',compact('company'));
     }
-    public function edit($id)
+    public function update(Request $request ,Company $company)
     {
-        //
-    }
-    public function update($id)
-    {
-        //
+        $validated = $request->validate([
+            'name'=>'required',
+            'email'=>'required|email',
+            'mobile' =>'required|digits:11',
+        ]);
+        $company->update($validated);
+        return redirect(route('company.index'));
     }
     public function delete($id)
     {
-        //
+        $company = Company::find($id);
+        $company->delete();
+
+        return redirect()->route('company.index');
     }
 }
