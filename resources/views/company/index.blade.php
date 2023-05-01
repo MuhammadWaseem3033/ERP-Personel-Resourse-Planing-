@@ -7,7 +7,7 @@
 
     <div class="py-12 ">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg"style="border:1px solid black;">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 @if (session('alert'))
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
                         <strong class="font-bold"></strong>
@@ -22,11 +22,12 @@
                         </span>
                     </div>
                 @endif
-                <button
-                    style="padding:10px;background-color:rgb(44, 240, 240);color:rgb(51, 54, 56);border-radius:10px;margin:10px;"><a
-                        href="{{ route('company.create') }}">Create</a></button>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg"
-                    style="border:5px dashed blue;margin-top:2%;margin:10px;">
+                    style="border:5px dashed blue;">
+                    @can('create company')
+                    <button class="" style="float:right; padding:10px;background-color:rgb(44, 240, 240);color:rgb(51, 54, 56);border-radius:10px;margin:10px;"><a
+                            href="{{ route('company.create') }}">Create</a></button>
+                @endcan
                     <table class="w-full text-sm text-left bg-slate-600">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
@@ -59,10 +60,14 @@
                                     </td>
 
                                     <td class="px-6 py-4">
+                                        @can('edit company')
                                         <a href="{{ route('company.edit', ['company' => $company->id]) }}"
-                                            style="color:rgb(13, 13, 218);">Edit</a> |
-                                        <a href="{{ route('company.delete', ['id' => $company->id]) }}"
-                                            style="color:rgb(226, 13, 13);">Delete</a>
+                                                style="color:rgb(13, 13, 218);float:left;" ><x-feathericon-edit class="hover:color-black-400" style="float:left"/></a>
+                                        @endcan
+                                        @can('delete company') 
+                                            <a href="{{ route('company.delete', ['id' => $company->id]) }}"
+                                                style="color:rgb(226, 13, 13);"><x-feathericon-trash style="float:left;margin-left:10px;"/></a>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach
