@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Companies') }}
+            {{ __('Items') }}
         </h2>
     </x-slot>
 
@@ -22,12 +22,12 @@
                         </span>
                     </div>
                 @endif
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg"
-                    style="border:5px dashed blue;">
-                    @can('create company')
-                    <button class="" style="float:right; padding:10px;background-color:rgb(44, 240, 240);color:rgb(51, 54, 56);border-radius:10px;margin:10px;"><a
-                            href="{{ route('company.create') }}">Create</a></button>
-                @endcan
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg" style="border:5px dashed blue;">
+                    @can('create item')
+                        <button class=""
+                            style="float:right; padding:10px;background-color:rgb(44, 240, 240);color:rgb(51, 54, 56);border-radius:10px;margin:10px;"><a
+                                href="{{ route('item.form') }}">Create</a></button>
+                    @endcan
                     <table class="w-full text-sm text-left bg-slate-600">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
@@ -35,10 +35,19 @@
                                     Name
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Email
+                                    description
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Mobile
+                                    hsn_code
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    sav_code
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Price
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Tax
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Action
@@ -46,27 +55,40 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($companies as $company)
+                            @foreach ($items as $item)
                                 <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $company->name }}
+                                        {{ $item->name }}
                                     </th>
                                     <td class="px-6 py-4">
-                                        {{ $company->email }}
+                                        {{ $item->description }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ $company->mobile }}
+                                        {{ $item->hsn_code }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $item->sav_code }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $item->price }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $item->tax }}
                                     </td>
 
                                     <td class="px-6 py-4">
-                                        @can('edit company')
-                                        <a href="{{ route('company.edit', ['company' => $company->id]) }}"
-                                                style="color:rgb(13, 13, 218);float:left;" ><x-feathericon-edit class="hover:color-black-400" style="float:left"/></a>
+                                        @can('create item')
+                                            <a href="{{ route('item.form') }}?id={{ $item->id }}"
+                                                style="color:rgb(13, 13, 218);float:left;">
+                                                <x-feathericon-edit class="hover:color-black-400" style="float:left" />
+                                            </a>
                                         @endcan
-                                        @can('delete company') 
-                                            <a href="{{ route('company.delete', ['id' => $company->id]) }}"
-                                                style="color:rgb(226, 13, 13);"><x-feathericon-trash style="float:left;margin-left:10px;"/></a>
+                                        @can('delete item')
+                                            <a href="{{ route('item.delete', ['id' => $item->id]) }}"
+                                                style="color:rgb(226, 13, 13);">
+                                                <x-feathericon-trash style="float:left;margin-left:10px;" />
+                                            </a>
                                         @endcan
                                     </td>
                                 </tr>
@@ -74,7 +96,7 @@
                         </tbody>
                     </table>
                     <div style="margin:15px">
-                    {{ $companies->links() }}
+                        {{ $items->links() }}
                     </div>
                 </div>
 

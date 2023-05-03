@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,4 +31,9 @@ Route::controller(CompanyController::class)->group(function(){
     Route::get('/company-edit/{company}','edit')->name('company.edit');
     Route::get('/company-delete/{id}','delete')->name('company.delete');
     Route::patch('/company-update/{company}','update')->name('company.update');
+});
+Route::controller(ItemController::class)->group(function(){
+    Route::get('/item','index')->name('item.index');
+    Route::get('/item-form','form')->name('item.form');
+    Route::get('/item-delete/{id}','delete')->name('item.delete');
 });
