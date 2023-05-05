@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Companies') }}
+            {{ __($type->name) }}
         </h2>
     </x-slot>
 
@@ -22,23 +22,27 @@
                         </span>
                     </div>
                 @endif
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg"
-                    style="border:5px dashed blue;">
-                    @can('create company')
-                    <button class="" style="float:right; padding:10px;background-color:rgb(44, 240, 240);color:rgb(51, 54, 56);border-radius:10px;margin:10px;"><a
-                            href="{{ route('company.create') }}">Create</a></button>
-                @endcan
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg" style="border:5px dashed blue;">
+                    @can('create ' . $type->name)
+                        <button class=""
+                            style="float:right; padding:10px;background-color:rgb(44, 240, 240);color:rgb(51, 54, 56);border-radius:10px;margin:10px;"><a
+                                href="{{ route('document.create', ['type' => $type->slug]) }}">Create
+                                {{ $type->name }}</a></button>
+                    @endcan
                     <table class="w-full text-sm text-left bg-slate-600">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Name
+                                    Title
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Email
+                                    Document_Number
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Mobile
+                                    Document_type
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    User_name
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Action
@@ -46,26 +50,31 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($companies as $company)
+                            @foreach ($documents as $document)
                                 <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                                     <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $company->name }}</th>
-                                    <td class="px-6 py-4">
-                                        {{ $company->email }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ $company->mobile }}
-                                    </td>
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ $document->title }}</th>
+                                        <td class="px-6 py-4">
+                                            {{ $document->document_number }}
+                                        </td> <td class="px-6 py-4">
+                                            {{ $document->documentType->name }}
+                                        </td> <td class="px-6 py-4">
+                                            {{ $document->user->name }}
+                                        </td>
 
                                     <td class="px-6 py-4">
-                                        @can('edit company')
-                                        <a href="{{ route('company.edit', ['company' => $company->id]) }}"
-                                                style="color:rgb(13, 13, 218);float:left;" ><x-feathericon-edit class="hover:color-black-400" style="float:left"/></a>
+                                        @can('edit ' . $type->name)
+                                            <a href="{{ route('document.edit', ['document' => $document->id]) }}"
+                                                style="color:rgb(13, 13, 218);float:left;">
+                                                <x-feathericon-edit class="hover:color-black-400" style="float:left" />
+                                            </a>
                                         @endcan
-                                        @can('delete company') 
-                                            <a href="{{ route('company.delete', ['id' => $company->id]) }}"
-                                                style="color:rgb(226, 13, 13);"><x-feathericon-trash style="float:left;margin-left:10px;"/></a>
+                                        @can('delete document')
+                                            <a href="{{ route('document.delete', ['id' => $document->id]) }}"
+                                                style="color:rgb(226, 13, 13);">
+                                                <x-feathericon-trash style="float:left;margin-left:10px;" />
+                                            </a>
                                         @endcan
                                     </td>
                                 </tr>
@@ -73,7 +82,7 @@
                         </tbody>
                     </table>
                     <div style="margin:15px">
-                    {{ $companies->links() }}
+                        {{ $documents->links() }}
                     </div>
                 </div>
 

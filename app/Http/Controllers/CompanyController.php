@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\DocumentType;
+use App\Models\invoice;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +14,9 @@ class CompanyController extends Controller
     public function index()
     {
         Auth::user()->assignRole('Super Admin');
-        $companies = Company::paginate(1);
+        // $invoice = DocumentType::all();
+        // dd($invoice);
+        $companies = Company::paginate(5);
         return view('company.index',compact('companies'));
     }
     public function create()
