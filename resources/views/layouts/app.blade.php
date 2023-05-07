@@ -41,5 +41,11 @@
         @stack('modals')
 
         @livewireScripts
+        @livewire('model')
+        <script>
+            function openModel(component ,params){
+                livewire.emit('openModel' ,component ,params)
+            }
+        </script>
     </body>
 </html>

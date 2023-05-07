@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Form extends Component
 {
-    public $company;
+    public $company ,$event;
     protected $rules = [
         'company.name' => 'required|min:6',
         'company.email' => 'required|email',
@@ -25,7 +25,13 @@ class Form extends Component
     {
         $validate = $this->validate();
         $this->company->save();
-        return redirect()->route('company.index');
+        if ($this->event) {
+            // dd('test');
+            $this->emit('companySelected',$this->company->id);
+            // $this->emitUp('closeModel');
+        }else{
+            return redirect()->route('company.index');
+        }
     }
 
     public function render()

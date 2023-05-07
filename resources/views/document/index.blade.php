@@ -64,7 +64,7 @@
                                         </td>
 
                                     <td class="px-6 py-4">
-                                        @can('edit ' . $type->name)
+                                        @can('edit '. $type->name)
                                             <a href="{{ route('document.edit', ['document' => $document->id]) }}"
                                                 style="color:rgb(13, 13, 218);float:left;">
                                                 <x-feathericon-edit class="hover:color-black-400" style="float:left" />
