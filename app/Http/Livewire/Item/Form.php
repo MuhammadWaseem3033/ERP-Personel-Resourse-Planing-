@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Form extends Component
 {
-    public $item;
+    public $item ,$event;
     protected $rules = [
         'item.name' => 'required',
         'item.description' => 'required',
@@ -28,7 +28,12 @@ class Form extends Component
     {
         $validate = $this->validate();
         $this->item->save();
-        return redirect()->route('item.index');
+        if ($this->event) {
+            $this->emit($this->event,$this->item->id);
+            // $this->emitUp('closeModel');
+        }else{
+            return redirect()->route('item.index');
+        }
     }
     public function render()
     {

@@ -17,4 +17,8 @@ class Item extends Model
         'tax' ,
     ];
   
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class);
+    }
 }

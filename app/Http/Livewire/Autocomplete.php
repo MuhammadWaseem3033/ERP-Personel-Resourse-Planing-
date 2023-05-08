@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Autocomplete extends Component
 {
-    public $query , $model , $event ,$createComponent;
+    public $query , $model , $event ,$createComponent ,$items=array();
     public $results = array() ;
     public function updatedQuery()
     {
@@ -18,6 +18,11 @@ class Autocomplete extends Component
             $this->results= [] ;
         }
         // dd($this->results);
+        if ($this->query !='') {
+            $this->items = DB::table('items')->where('name','like','%'.$this->query.'%')->limit(6)->get();
+            }else {
+                $this->items= [] ;
+            }
     }
     public function select($rowId)
     {

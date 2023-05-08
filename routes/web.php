@@ -24,7 +24,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     })->name('dashboard');
 });
 //
-Route::controller(CompanyController::class)->group(function(){
+Route::controller(CompanyController::class)->middleware('auth')->group(function(){
     Route::get('/company','index')->name('company.index');
     Route::get('/company-create','create')->name('company.create');
     Route::post('/company-store','store')->name('company.store');
@@ -33,12 +33,12 @@ Route::controller(CompanyController::class)->group(function(){
     Route::get('/company-delete/{id}','delete')->name('company.delete');
     Route::patch('/company-update/{company}','update')->name('company.update');
 });
-Route::controller(ItemController::class)->group(function(){
+Route::controller(ItemController::class)->middleware('auth')->group(function(){
     Route::get('/item','index')->name('item.index');
     Route::get('/item-form','form')->name('item.form');
     Route::get('/item-delete/{id}','delete')->name('item.delete');
 });
-Route::controller(DocumentController::class)->group(function(){
+Route::controller(DocumentController::class)->middleware('auth')->group(function(){
     Route::get('/document/{type}','index')->name('document.index');
     Route::get('/document-form/{type}','create')->name('document.create');
     Route::post('/document-store','store')->name('document.store');

@@ -27,7 +27,7 @@ class Form extends Component
         $this->company->save();
         if ($this->event) {
             // dd('test');
-            $this->emit('companySelected',$this->company->id);
+            $this->emit($this->event,$this->company->id);
             // $this->emitUp('closeModel');
         }else{
             return redirect()->route('company.index');

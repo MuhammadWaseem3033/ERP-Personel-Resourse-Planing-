@@ -1,4 +1,4 @@
-<div>
+<div class=" p-4">
     <form wire:submit.prevent="save" method="post">
         @csrf
 
